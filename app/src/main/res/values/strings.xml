@@ -3,4 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Profile</string>
+    <string name="name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="title">Title</string>
+    <string name="add_to_saved_contacts">Add to saved contacts</string>
+    <string name="remove_from_saved_contacts">Remove from saved contacts</string>
 </resources>
