@@ -36,10 +36,10 @@ class UserDetailsFragment : Fragment() {
 
     private fun setupViews() {
 
-//        binding.profile =
+        binding.profile = viewModel.savedUser
 
         Glide.with(requireContext())
-            .load("")
+            .load(viewModel.savedUser.picture)
             .placeholder(R.drawable.ic_person_purple)
             .into(binding.ivDisplayPicture)
     }

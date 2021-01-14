@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/star"
         android:src="@drawable/ic_star"
+        android:padding="@dimen/very_small_margin"
         android:layout_marginEnd="@dimen/normal_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

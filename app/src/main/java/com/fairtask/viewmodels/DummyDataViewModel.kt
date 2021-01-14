@@ -16,10 +16,11 @@ class DummyDataViewModel(
 ) : ViewModel() {
 
     private val remoteUsersLiveData = MutableLiveData<Resource<List<User>>>()
-    private val symbolsLiveData = MutableLiveData<Resource<List<User>>>()
 
 
     val getUsersFromRoom: LiveData<List<User>> = roomDB.getUsers.asLiveData()
+    var savedUser = User()
+
 
     fun deleteUserFromRoom(id: String) {
         viewModelScope.launch {
