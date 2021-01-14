@@ -5,43 +5,54 @@ package com.fairtask.viewmodels
 import androidx.lifecycle.*
 import com.fairtask.data.ApiService
 import com.fairtask.data.RoomDB
+import com.fairtask.models.Resource
 import com.fairtask.models.User
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class DummyDataViewModel(
     private val api: ApiService,
-    roomDB: RoomDB
+    private val roomDB: RoomDB
 ) : ViewModel() {
 
-//    private val convertLiveData = MutableLiveData<Resource<ConvertResponse>>()
-//    private val symbolsLiveData = MutableLiveData<Resource<SymbolsResponse>>()
+    private val remoteUsersLiveData = MutableLiveData<Resource<List<User>>>()
+    private val symbolsLiveData = MutableLiveData<Resource<List<User>>>()
 
 
-    val getProfileFromRoom: LiveData<List<User>> = roomDB.getUsers.asLiveData()
+    val getUsersFromRoom: LiveData<List<User>> = roomDB.getUsers.asLiveData()
 
+    fun deleteUserFromRoom(id: String) {
+        viewModelScope.launch {
+            roomDB.deleteProfile(id)
+        }
+    }
 
-
-    fun fetchAllSymbols() {
-
-//        viewModelScope.launch {
-//            symbolsLiveData.postValue(Resource.loading())
-//            try {
-//                val result = api.symbols()
-//                when(result.success) {
-//                    true -> symbolsLiveData.postValue(Resource.success(result))
-//                    false -> symbolsLiveData.postValue(Resource.error())
-//                }
-//            }
-//            catch (e: Exception) {
-//                symbolsLiveData.postValue(Resource.error())
-//            }
-//        }
+    fun addUserToRoom(user: User) {
+        viewModelScope.launch {
+            roomDB.insert(user)
+        }
     }
 
 
-//    fun getConvertLiveData() = convertLiveData
-//    fun getSymbolsLiveData() = symbolsLiveData
+    fun getUsersFromRemote() {
+
+        viewModelScope.launch {
+            remoteUsersLiveData.postValue(Resource.loading())
+            try {
+                val result = api.fetchUsers(100)
+                when(result.data.isNotEmpty()) {
+                    true -> remoteUsersLiveData.postValue(Resource.success(result.data))
+                    false -> remoteUsersLiveData.postValue(Resource.error())
+                }
+            }
+            catch (e: Exception) {
+                remoteUsersLiveData.postValue(Resource.error())
+            }
+        }
+    }
+
+
+    fun getRemoteUsersLiveData() = remoteUsersLiveData
 
 
 
