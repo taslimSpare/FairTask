@@ -1,4 +1,4 @@
-package com.dabinu.abu.models
+package com.fairtask.models
 
 
 
@@ -22,4 +22,3 @@ class Resource<T>(val state: State = State.LOADING, val data: T?) {
         }
     }
 }
-

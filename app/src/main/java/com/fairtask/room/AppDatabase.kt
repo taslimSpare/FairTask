@@ -1,17 +1,17 @@
-package com.dabinu.abu.room
+package com.fairtask.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.dabinu.abu.models.Account
-import com.dabinu.abu.room.dao.AccountDao
+import com.fairtask.models.User
+import com.fairtask.room.dao.UserDao
 
 
-@Database(entities = [Account::class], version = 1, exportSchema = false)
+@Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun accountDao(): AccountDao
+    abstract fun userDao(): UserDao
 
     companion object {
 
@@ -23,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "abu_db"
+                    "fair_task_db"
                 ).build()
                 INSTANCE = instance
                 // return instance

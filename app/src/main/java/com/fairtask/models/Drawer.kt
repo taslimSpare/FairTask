@@ -1,3 +1,3 @@
-package com.dabinu.abu.models
+package com.fairtask.models
 
 class DrawerItem(val icon: Int, val title: String, var selected: Boolean = false)

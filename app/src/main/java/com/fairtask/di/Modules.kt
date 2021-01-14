@@ -1,21 +1,17 @@
-package com.dabinu.abu.di
+package com.fairtask.di
 
 import androidx.room.Room
-import com.dabinu.abu.data.ApiService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import com.dabinu.abu.BuildConfig
-import com.dabinu.abu.data.FirebaseHelper
-import com.dabinu.abu.data.RoomDB
-import com.dabinu.abu.room.AppDatabase
-import com.dabinu.abu.room.dao.AccountDao
-import com.dabinu.abu.viewmodels.AuthViewModel
-import com.dabinu.abu.viewmodels.FixerViewModel
+import com.fairtask.BuildConfig
+import com.fairtask.data.ApiService
+import com.fairtask.data.RoomDB
+import com.fairtask.room.AppDatabase
+import com.fairtask.room.dao.UserDao
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import retrofit2.converter.gson.GsonConverterFactory
 
 
@@ -24,21 +20,17 @@ import retrofit2.converter.gson.GsonConverterFactory
    This would also be useful if there are different values per buildType in the future
  */
 private const val API_BASE_URL = BuildConfig.BASE_URL
-private const val ACCESS_TOKEN = BuildConfig.ACCESS_TOKEN
 
 
 
 val appModules = module {
     single { createApiService() }
-    single { FirebaseHelper() }
-    single { RoomDB(get() as AccountDao) }
+    single { RoomDB(get() as UserDao) }
     single { Room.databaseBuilder(androidContext(),
         AppDatabase::class.java, "abu_db")
         .allowMainThreadQueries()
         .build() } // using allowMainThreadQueries() is highly discouraged as running on the UI thread can lead to ANRs. A better alternative would have been to run my DB queries on a network thread using Coroutines.
-    single { get<AppDatabase>().accountDao() }
-    viewModel { AuthViewModel(get(), get()) }
-    viewModel { FixerViewModel(get(), get()) }
+    single { get<AppDatabase>().userDao() }
 }
 
 
@@ -78,7 +70,6 @@ class TokenInterceptor: Interceptor {
             .request()
             .url
             .newBuilder()
-            .addQueryParameter("access_key", ACCESS_TOKEN)
             .build()
 
         return chain.proceed(chain.request().newBuilder().url(url).build())
