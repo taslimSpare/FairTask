@@ -11,4 +11,5 @@ class User(
     var lastName: String = "",
     var picture: String = "",
     var email: String = "",
+    var saved: Boolean = false
 )
