@@ -11,11 +11,12 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Query("SELECT * FROM User ORDER BY firstName ASC")
-    fun getProfile(): Flow<List<User>>
+    fun getProfiles(): Flow<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveProfile(account: User)
+    suspend fun saveProfile(user: User)
 
-    @Query("DELETE FROM User")
-    suspend fun deleteUser()
+    @Query("DELETE FROM User WHERE id = :id")
+    suspend fun deleteUser(id: String)
+
 }

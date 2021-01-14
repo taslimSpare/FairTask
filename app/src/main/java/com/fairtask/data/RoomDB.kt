@@ -17,7 +17,7 @@ class RoomDB(
     /* This returns a LiveData of the current account(s) stored in the DB.
         I chose to use a LiveData because of the advantage of always getting real-time data
      */
-    val getAccount: Flow<List<User>> = userDao.getProfile()
+    val getUsers: Flow<List<User>> = userDao.getProfiles()
 
 
 
@@ -33,8 +33,8 @@ class RoomDB(
     // this function deletes a/all user profiles from the local storage
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun deleteProfile() {
-        userDao.deleteUser()
+    suspend fun deleteProfile(id: String) {
+        userDao.deleteUser(id)
     }
 
 
