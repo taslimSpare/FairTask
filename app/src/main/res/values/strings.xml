@@ -8,4 +8,7 @@
     <string name="title">Title</string>
     <string name="add_to_saved_contacts">Add to saved contacts</string>
     <string name="remove_from_saved_contacts">Remove from saved contacts</string>
+    <string name="you_have_no_saved_contacts">You have no saved contacts</string>
+    <string name="all_contacts">All contacts</string>
+    <string name="saved_contacts">Saved contacts</string>
 </resources>

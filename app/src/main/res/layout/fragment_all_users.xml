@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_saved_contacts"
-            android:text="Saved contacts"
+            android:text="@string/saved_contacts"
             android:textSize="@dimen/small_text_height"
             android:textColor="@color/purple"
             android:layout_margin="@dimen/normal_margin"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/no_saved_contact"
-            android:text="You have no saved contacts"
+            android:text="@string/you_have_no_saved_contacts"
             android:textColor="@color/green"
             android:visibility="gone"
             android:textSize="@dimen/normal_text_height"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_all_contacts"
-            android:text="All contacts"
+            android:text="@string/all_contacts"
             android:textSize="@dimen/small_text_height"
             android:textColor="@color/purple"
             android:layout_marginTop="@dimen/very_very_big_margin"
@@ -52,6 +52,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/rv_all_contacts"
+            tools:listitem="@layout/all_contact_layout"
             android:layout_margin="@dimen/normal_margin"
             app:layout_constraintTop_toBottomOf="@+id/tv_all_contacts" />
 
