@@ -1,12 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.AllUsersFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_saved_contacts"
+            android:text="Saved contacts"
+            android:textSize="@dimen/small_text_height"
+            android:textColor="@color/purple"
+            android:layout_margin="@dimen/normal_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_saved_contacts"
+            android:layout_margin="@dimen/normal_margin"
+            app:layout_constraintTop_toBottomOf="@+id/tv_saved_contacts" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_saved_contact"
+            android:text="You have no saved contacts"
+            android:textColor="@color/green"
+            android:visibility="gone"
+            android:textSize="@dimen/normal_text_height"
+            android:layout_marginTop="@dimen/normal_margin"
+            app:layout_constraintStart_toStartOf="@id/tv_saved_contacts"
+            app:layout_constraintTop_toBottomOf="@+id/tv_saved_contacts" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_all_contacts"
+            android:text="All contacts"
+            android:textSize="@dimen/small_text_height"
+            android:textColor="@color/purple"
+            android:layout_marginTop="@dimen/very_very_big_margin"
+            app:layout_constraintStart_toStartOf="@id/rv_saved_contacts"
+            app:layout_constraintTop_toBottomOf="@id/rv_saved_contacts" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/normal_margin"
+            app:layout_constraintTop_toBottomOf="@+id/tv_all_contacts" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

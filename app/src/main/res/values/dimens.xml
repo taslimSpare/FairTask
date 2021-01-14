@@ -30,9 +30,13 @@
 
     <dimen name="button_radius">7dp</dimen>
     <dimen name="cardview_normal_elevation">3dp</dimen>
+    <dimen name="cardview_big_elevation">10dp</dimen>
+    <dimen name="cardview_small_radius">12dp</dimen>
     <dimen name="cardview_normal_radius">15dp</dimen>
 
+    <dimen name="zero">0dp</dimen>
 
     <dimen name="normal_circle_diameter">60dp</dimen>
+    <dimen name="big_circle_diameter">80dp</dimen>
 
 </resources>
