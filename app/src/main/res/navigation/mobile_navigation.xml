@@ -21,5 +21,17 @@
         <action
             android:id="@+id/action_userDetailsFragment_to_allUsersFragment"
             app:destination="@id/allUsersFragment" />
+        <action
+            android:id="@+id/action_userDetailsFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.fairtask.ui.fragments.PhotoFragment"
+        android:label="fragment_photo"
+        tools:layout="@layout/fragment_photo" >
+        <action
+            android:id="@+id/action_photoFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
     </fragment>
 </navigation>
