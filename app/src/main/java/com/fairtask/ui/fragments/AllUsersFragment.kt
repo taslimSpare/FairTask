@@ -6,54 +6,43 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fairtask.R
 import com.fairtask.databinding.FragmentAllUsersBinding
+import com.fairtask.fn.toast
 import com.fairtask.models.State
 import com.fairtask.models.User
 import com.fairtask.ui.adapters.AllUsersAdapter
 import com.fairtask.ui.adapters.SavedUsersAdapter
 import com.fairtask.viewmodels.DummyDataViewModel
-import com.fairtask.viewmodels.InterfaceForViewModel
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class AllUsersFragment : Fragment() {
 
     private lateinit var binding: FragmentAllUsersBinding
     private lateinit var navController: NavController
+    private val viewModel by viewModel<DummyDataViewModel>()
+
     private var localList = mutableListOf<User>()
     private var remoteList = mutableListOf<User>()
-    private val localAdapter by lazy { SavedUsersAdapter(requireContext(), localList) { user -> openUserDetails(
-        user
-    )} }
-    private val remoteAdapter by lazy { AllUsersAdapter(requireContext(), remoteList) { user -> openUserDetails(
-        user
-    )} }
+
+    private val localAdapter by lazy { SavedUsersAdapter(requireContext(), localList) { user -> openUserDetails(user)} }
+    private val remoteAdapter by lazy { AllUsersAdapter(remoteList, { user -> toggleSaveState(user)}, { user -> openUserDetails(user)} )}
 
 
-    private var interfaceCallBack: InterfaceForViewModel? = null
-    private val sharedVM: DummyDataViewModel by activityViewModels()
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_users, container, false)
         navController = Navigation.findNavController(container!!)
 
-        interfaceCallBack = requireActivity() as? InterfaceForViewModel
-
         setupRecyclerViews()
         observe()
-        sharedVM.getUsersFromRemote()
+        viewModel.getUsersFromRemote()
 
         return binding.root
     }
@@ -61,7 +50,7 @@ class AllUsersFragment : Fragment() {
 
     private fun observe() {
 
-        with(sharedVM) {
+        with(viewModel) {
 
             getUsersFromRoom.observe(viewLifecycleOwner, {
                 if (it.isEmpty()) {
@@ -121,8 +110,16 @@ class AllUsersFragment : Fragment() {
     }
 
     private fun openUserDetails(user: User) {
-        sharedVM.savedUser = user
+        viewModel.savedUser = user
         navController.navigate(R.id.action_allUsersFragment_to_userDetailsFragment)
+    }
+
+    private fun toggleSaveState(user: User) {
+        user.saved = !user.saved
+        if(user.saved) viewModel.addUserToRoom(user) else viewModel.deleteUserFromRoom(user.id)
+        requireContext().toast(if(user.saved) "User saved to local storage" else "User removed from local storage")
+        localAdapter.notifyDataSetChanged()
+        remoteAdapter.notifyDataSetChanged()
     }
 
 }
