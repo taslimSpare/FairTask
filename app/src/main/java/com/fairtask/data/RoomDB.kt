@@ -30,7 +30,7 @@ class RoomDB(
 
 
 
-    // this function deletes a/all user profiles from the local storage
+    // this function deletes a user's profile from the local storage
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteProfile(id: String) {

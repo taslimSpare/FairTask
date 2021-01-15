@@ -11,4 +11,12 @@ class User(
     var lastName: String = "",
     var picture: String = "",
     var email: String = "",
-)
+    var saved: Boolean = false
+) {
+    fun idExistentInList(list: MutableList<User>): Boolean {
+        list.forEach { _user ->
+            if(_user.id == id) return true
+        }
+        return false
+    }
+}

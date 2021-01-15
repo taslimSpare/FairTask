@@ -11,7 +11,9 @@ import com.fairtask.data.ApiService
 import com.fairtask.data.RoomDB
 import com.fairtask.room.AppDatabase
 import com.fairtask.room.dao.UserDao
+import com.fairtask.viewmodels.DummyDataViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import retrofit2.converter.gson.GsonConverterFactory
 
 
@@ -31,6 +33,7 @@ val appModules = module {
         .allowMainThreadQueries()
         .build() } // using allowMainThreadQueries() is highly discouraged as running on the UI thread can lead to ANRs. A better alternative would have been to run my DB queries on a network thread using Coroutines.
     single { get<AppDatabase>().userDao() }
+    viewModel { DummyDataViewModel(get(), get()) }
 }
 
 
