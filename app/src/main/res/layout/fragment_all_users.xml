@@ -49,6 +49,15 @@
             app:layout_constraintStart_toStartOf="@id/rv_saved_contacts"
             app:layout_constraintTop_toBottomOf="@id/rv_saved_contacts" />
 
+        <ProgressBar
+            android:layout_width="@dimen/normal_margin"
+            android:layout_height="@dimen/normal_margin"
+            android:id="@+id/pb_progress_bar"
+            android:indeterminateTint="@color/purple"
+            android:layout_marginEnd="@dimen/normal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_all_contacts" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -204,13 +204,16 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_text"
                     android:gravity="center"
+                    android:drawableStart="@{profile.saved ? @drawable/ic_unliked : @drawable/ic_liked}"
+                    android:text="@{profile.saved ? @string/remove_from_saved_contacts : @string/add_to_saved_contacts}"
                     android:textSize="@dimen/normal_text_height"
                     android:textColor="@color/white"
                     android:paddingStart="@dimen/big_margin"
                     android:paddingEnd="0dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="UseCompatTextViewDrawableXml" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

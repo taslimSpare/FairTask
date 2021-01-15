@@ -1,7 +1,6 @@
 package com.fairtask.viewmodels
 
 
-
 import androidx.lifecycle.*
 import com.fairtask.data.ApiService
 import com.fairtask.data.RoomDB
@@ -43,11 +42,11 @@ class DummyDataViewModel(
                 val result = api.fetchUsers(100)
                 when(result.data.isNotEmpty()) {
                     true -> remoteUsersLiveData.postValue(Resource.success(result.data))
-                    false -> remoteUsersLiveData.postValue(Resource.error())
+                    false -> remoteUsersLiveData.postValue(Resource.error("You have no saved users"))
                 }
             }
             catch (e: Exception) {
-                remoteUsersLiveData.postValue(Resource.error())
+                remoteUsersLiveData.postValue(Resource.error(e.message))
             }
         }
     }
