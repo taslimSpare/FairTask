@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fairtask.R
 import com.fairtask.databinding.FragmentAllUsersBinding
+import com.fairtask.fn.saveProfile
+import com.fairtask.fn.snack
 import com.fairtask.fn.toast
 import com.fairtask.models.State
 import com.fairtask.models.User
@@ -54,9 +56,11 @@ class AllUsersFragment : Fragment() {
 
             getUsersFromRoom.observe(viewLifecycleOwner, {
                 if (it.isEmpty()) {
-                    binding.rvSavedContacts.visibility = View.GONE
                     binding.noSavedContact.visibility = View.VISIBLE
+                    binding.rvSavedContacts.visibility = View.GONE
                 } else {
+                    binding.noSavedContact.visibility = View.GONE
+                    binding.rvSavedContacts.visibility = View.VISIBLE
                     localList.clear()
                     it.forEach { _user ->
                         _user.saved = true
@@ -73,11 +77,7 @@ class AllUsersFragment : Fragment() {
 
                     State.ERROR -> {
                         binding.pbProgressBar.visibility = View.GONE
-                        Snackbar.make(
-                            binding.rvAllContacts,
-                            it.message as String,
-                            Snackbar.LENGTH_LONG
-                        ).show()
+                        requireActivity().snack(it.message as String)
                     }
                     State.SUCCESS -> {
                         binding.pbProgressBar.visibility = View.GONE
@@ -110,7 +110,7 @@ class AllUsersFragment : Fragment() {
     }
 
     private fun openUserDetails(user: User) {
-        viewModel.savedUser = user
+        user.saveProfile(requireContext())
         navController.navigate(R.id.action_allUsersFragment_to_userDetailsFragment)
     }
 

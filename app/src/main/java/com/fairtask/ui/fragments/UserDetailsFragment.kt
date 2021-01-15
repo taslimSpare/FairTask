@@ -12,6 +12,9 @@ import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.fairtask.R
 import com.fairtask.databinding.FragmentUserDetailsBinding
+import com.fairtask.fn.getProfile
+import com.fairtask.fn.toast
+import com.fairtask.models.User
 import com.fairtask.viewmodels.DummyDataViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,6 +24,7 @@ class UserDetailsFragment : Fragment() {
     private lateinit var binding: FragmentUserDetailsBinding
     private lateinit var navController: NavController
     private val viewModel by viewModel<DummyDataViewModel>()
+    private var user = User()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -36,12 +40,13 @@ class UserDetailsFragment : Fragment() {
 
     private fun setupViews() {
 
-//        binding.profile = sharedVM.savedUser
-//
-//        Glide.with(requireContext())
-//            .load(sharedVM.savedUser.picture)
-//            .placeholder(R.drawable.ic_person_purple)
-//            .into(binding.ivDisplayPicture)
+        user = getProfile(requireContext())
+        binding.profile = user
+
+        Glide.with(requireContext())
+            .load(user.picture)
+            .placeholder(R.drawable.ic_person_purple)
+            .into(binding.ivDisplayPicture)
     }
 
 
@@ -49,9 +54,10 @@ class UserDetailsFragment : Fragment() {
         binding.ivDisplayPicture.setOnClickListener { navController.navigate(R.id.action_userDetailsFragment_to_photoFragment) }
         binding.ibBack.setOnClickListener { navController.navigate(R.id.action_userDetailsFragment_to_allUsersFragment) }
         binding.cvToggleFav.setOnClickListener {
-//            sharedVM.savedUser.saved = !sharedVM.savedUser.saved
-//            if(sharedVM.savedUser.saved) { sharedVM.addUserToRoom(sharedVM.savedUser) } else { sharedVM.deleteUserFromRoom(sharedVM.savedUser.id) }
-//            binding.profile = sharedVM.savedUser
+            user.saved = !user.saved
+            if(user.saved) { viewModel.addUserToRoom(user) } else { viewModel.deleteUserFromRoom(user.id) }
+            requireContext().toast(if(user.saved) "User saved to local storage" else "User removed from local storage")
+            binding.profile = user
         }
     }
 

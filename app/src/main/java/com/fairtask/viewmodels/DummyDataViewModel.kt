@@ -18,7 +18,6 @@ class DummyDataViewModel(
 
 
     val getUsersFromRoom: LiveData<List<User>> = roomDB.getUsers.asLiveData()
-    var savedUser = User()
 
 
     fun deleteUserFromRoom(id: String) {
